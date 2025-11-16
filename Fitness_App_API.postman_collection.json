@@ -1,0 +1,470 @@
+{
+  "info": {
+    "name": "Fitness App API",
+    "description": "Collection complète pour tester l'API Fitness App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Jean Dupont\",\n  \"email\": \"jean@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"token\", jsonData.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jean@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exercices",
+      "item": [
+        {
+          "name": "Get All Exercices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/exercices",
+              "host": ["{{base_url}}"],
+              "path": ["exercices"]
+            }
+          }
+        },
+        {
+          "name": "Get Exercice by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/exercices/1",
+              "host": ["{{base_url}}"],
+              "path": ["exercices", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Exercice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Hip Thrust\",\n  \"groupe_musculaire\": \"Fessiers\",\n  \"description\": \"Exercice pour les fessiers avec barre\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/exercices",
+              "host": ["{{base_url}}"],
+              "path": ["exercices"]
+            }
+          }
+        },
+        {
+          "name": "Update Exercice",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Hip Thrust modifié\",\n  \"groupe_musculaire\": \"Fessiers\",\n  \"description\": \"Description mise à jour\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/exercices/13",
+              "host": ["{{base_url}}"],
+              "path": ["exercices", "13"]
+            }
+          }
+        },
+        {
+          "name": "Delete Exercice",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/exercices/13",
+              "host": ["{{base_url}}"],
+              "path": ["exercices", "13"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Programmes",
+      "item": [
+        {
+          "name": "Get All Programmes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/programmes",
+              "host": ["{{base_url}}"],
+              "path": ["programmes"]
+            }
+          }
+        },
+        {
+          "name": "Get Programme by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/programmes/1",
+              "host": ["{{base_url}}"],
+              "path": ["programmes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Programme",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Push Day\",\n  \"description\": \"Programme pectoraux, épaules, triceps\",\n  \"exercices\": [\n    {\n      \"exercice_id\": 1,\n      \"series\": 4,\n      \"reps_cible\": 10\n    },\n    {\n      \"exercice_id\": 4,\n      \"series\": 3,\n      \"reps_cible\": 12\n    },\n    {\n      \"exercice_id\": 7,\n      \"series\": 3,\n      \"reps_cible\": 15\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/programmes",
+              "host": ["{{base_url}}"],
+              "path": ["programmes"]
+            }
+          }
+        },
+        {
+          "name": "Update Programme",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Push Day V2\",\n  \"description\": \"Programme modifié\",\n  \"exercices\": [\n    {\n      \"exercice_id\": 1,\n      \"series\": 5,\n      \"reps_cible\": 8\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/programmes/1",
+              "host": ["{{base_url}}"],
+              "path": ["programmes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Programme",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/programmes/1",
+              "host": ["{{base_url}}"],
+              "path": ["programmes", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Seances",
+      "item": [
+        {
+          "name": "Get All Seances",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/seances",
+              "host": ["{{base_url}}"],
+              "path": ["seances"]
+            }
+          }
+        },
+        {
+          "name": "Get Seance by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/seances/1",
+              "host": ["{{base_url}}"],
+              "path": ["seances", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Seance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"programme_id\": 1,\n  \"duree\": 60,\n  \"notes\": \"Super séance, j'ai bien progressé\",\n  \"performances\": [\n    {\n      \"exercice_id\": 1,\n      \"serie_num\": 1,\n      \"reps\": 10,\n      \"poids\": 80\n    },\n    {\n      \"exercice_id\": 1,\n      \"serie_num\": 2,\n      \"reps\": 10,\n      \"poids\": 80\n    },\n    {\n      \"exercice_id\": 1,\n      \"serie_num\": 3,\n      \"reps\": 8,\n      \"poids\": 85\n    },\n    {\n      \"exercice_id\": 1,\n      \"serie_num\": 4,\n      \"reps\": 7,\n      \"poids\": 85\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/seances",
+              "host": ["{{base_url}}"],
+              "path": ["seances"]
+            }
+          }
+        },
+        {
+          "name": "Add Performance to Seance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exercice_id\": 4,\n  \"serie_num\": 1,\n  \"reps\": 12,\n  \"poids\": 40\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/seances/1/performances",
+              "host": ["{{base_url}}"],
+              "path": ["seances", "1", "performances"]
+            }
+          }
+        },
+        {
+          "name": "Delete Seance",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/seances/1",
+              "host": ["{{base_url}}"],
+              "path": ["seances", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stats",
+      "item": [
+        {
+          "name": "Get Exercice Progression",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stats/exercice/1",
+              "host": ["{{base_url}}"],
+              "path": ["stats", "exercice", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Exercice Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stats/exercice/1/summary",
+              "host": ["{{base_url}}"],
+              "path": ["stats", "exercice", "1", "summary"]
+            }
+          }
+        },
+        {
+          "name": "Get Exercice Chart Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stats/exercice/1/chart",
+              "host": ["{{base_url}}"],
+              "path": ["stats", "exercice", "1", "chart"]
+            }
+          }
+        },
+        {
+          "name": "Get Global Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stats/global",
+              "host": ["{{base_url}}"],
+              "path": ["stats", "global"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
